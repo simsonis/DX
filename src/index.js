@@ -3,8 +3,6 @@
 const { program } = require('commander');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
-const fs = require('fs-extra');
-const path = require('path');
 
 // Import modules
 const { setupProject } = require('./commands/setup');
@@ -39,26 +37,26 @@ program
   .description('Initialize a new DX project')
   .action(async () => {
     console.log(chalk.green('🎯 Initializing DX project...'));
-    
+
     const answers = await inquirer.prompt([
       {
         type: 'input',
         name: 'projectName',
         message: 'Project name:',
-        default: 'my-dx-project'
+        default: 'my-dx-project',
       },
       {
         type: 'list',
         name: 'projectType',
         message: 'Project type:',
-        choices: ['cli-tool', 'web-app', 'api-server', 'library']
+        choices: ['cli-tool', 'web-app', 'api-server', 'library'],
       },
       {
         type: 'confirm',
         name: 'useTypescript',
         message: 'Use TypeScript?',
-        default: true
-      }
+        default: true,
+      },
     ]);
 
     console.log(chalk.green(`✨ Creating ${answers.projectName} project...`));
