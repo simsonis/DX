@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DX - Developer Experience Toolkit</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .feature-card {
+      padding: 20px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    
+    .feature-card h3 {
+      color: #34495e;
+      margin-top: 0;
+    }
+    
+    .feature-card p {
+      color: #7f8c8d;
+      line-height: 1.6;
+    }
+    
+    .hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .hero p {
+      font-size: 1.2em;
+      color: #7f8c8d;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #3498db;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      margin: 10px;
+      transition: background 0.3s;
+    }
+    
+    .btn:hover {
+      background: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <h1>🚀 DX - Developer Experience Toolkit</h1>
+      <p>A comprehensive toolkit for improving developer experience and productivity</p>
+      <a href="#" class="btn">Get Started</a>
+      <a href="#" class="btn">Documentation</a>
+    </div>
+    
+    <div class="features">
+      <div class="feature-card">
+        <h3>🛠️ CLI Tools</h3>
+        <p>Powerful command-line interface for project setup, code generation, and development workflow automation.</p>
+      </div>
+      
+      <div class="feature-card">
+        <h3>⚡ Code Generation</h3>
+        <p>Generate components, utilities, interfaces, and more with TypeScript and React support.</p>
+      </div>
+      
+      <div class="feature-card">
+        <h3>🔧 Build System</h3>
+        <p>Integrated webpack configuration with TypeScript, CSS, and asset processing.</p>
+      </div>
+      
+      <div class="feature-card">
+        <h3>🎨 Templates</h3>
+        <p>Pre-configured templates for JavaScript, TypeScript, React components, and hooks.</p>
+      </div>
+      
+      <div class="feature-card">
+        <h3>✅ Quality Tools</h3>
+        <p>ESLint, Prettier, and Jest configuration for consistent code quality and testing.</p>
+      </div>
+      
+      <div class="feature-card">
+        <h3>🚀 Development Server</h3>
+        <p>Hot reloading development server with webpack-dev-server integration.</p>
+      </div>
+    </div>
+  </div>
+  
+  <div id="root"></div>
+</body>
+</html>
