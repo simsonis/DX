@@ -9,6 +9,16 @@ const { setupProject } = require('./commands/setup');
 const { generateTemplate } = require('./commands/generate');
 const { lintProject } = require('./commands/lint');
 
+// Import plugin system
+const PluginManager = require('./core/PluginManager');
+const TemplateManager = require('./core/TemplateManager');
+const PluginAPI = require('./core/PluginAPI');
+
+// Initialize plugin system
+const pluginManager = new PluginManager();
+const templateManager = new TemplateManager();
+const pluginAPI = new PluginAPI(pluginManager, templateManager);
+
 console.log(chalk.blue.bold('🚀 DX - Developer Experience Toolkit'));
 
 program
@@ -25,7 +35,30 @@ program
   .command('generate <type>')
   .description('Generate code templates and boilerplate')
   .option('-n, --name <name>', 'Name of the component/module')
-  .action(generateTemplate);
+  .action(async (type, options) => {
+    await pluginManager.loadPlugins();
+    
+    // Register Vue plugin manually for demo
+    const vuePlugin = require('./plugins/vue-plugin');
+    if (vuePlugin.register) {
+      vuePlugin.register(pluginAPI);
+    }
+
+    // Register Express plugin
+    const expressPlugin = require('./plugins/express-plugin');
+    if (expressPlugin.register) {
+      expressPlugin.register(pluginAPI);
+    }
+    
+    // Check if template exists in plugin system
+    if (templateManager.hasTemplate(type)) {
+      const name = options.name || 'MyComponent';
+      await templateManager.generateTemplate(type, name, options);
+    } else {
+      // Fall back to original generate function
+      await generateTemplate(type, options);
+    }
+  });
 
 program
   .command('lint')
@@ -63,4 +96,61 @@ program
     // Project initialization logic will be implemented
   });
 
-program.parse();
+program
+  .command('plugins')
+  .description('List installed plugins')
+  .action(async () => {
+    await pluginManager.loadPlugins();
+    const plugins = pluginManager.getPluginInfo();
+    
+    if (plugins.length === 0) {
+      console.log(chalk.yellow('No plugins installed'));
+      return;
+    }
+    
+    console.log(chalk.blue('📦 Installed Plugins:'));
+    plugins.forEach(plugin => {
+      console.log(`  ${chalk.green(plugin.name)} v${plugin.version}`);
+      console.log(`    ${plugin.description}`);
+      console.log(`    Author: ${plugin.author}`);
+      console.log('');
+    });
+  });
+
+program
+  .command('templates')
+  .description('List available templates')
+  .action(async () => {
+    await pluginManager.loadPlugins();
+    const templates = templateManager.getTemplateInfo();
+    
+    console.log(chalk.blue('📝 Available Templates:'));
+    templates.forEach(template => {
+      console.log(`  ${chalk.green(template.type)} - ${template.description}`);
+    });
+  });
+
+// Initialize plugin system
+async function initializePlugins() {
+  await pluginManager.loadPlugins();
+  
+  // Register Vue plugin manually for demo
+  const vuePlugin = require('./plugins/vue-plugin');
+  if (vuePlugin.register) {
+    vuePlugin.register(pluginAPI);
+  }
+
+  // Register Express plugin
+  const expressPlugin = require('./plugins/express-plugin');
+  if (expressPlugin.register) {
+    expressPlugin.register(pluginAPI);
+  }
+}
+
+// Initialize and parse
+initializePlugins().then(() => {
+  program.parse();
+}).catch(error => {
+  console.error(chalk.red('❌ Failed to initialize plugins:'), error.message);
+  process.exit(1);
+});

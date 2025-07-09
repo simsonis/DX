@@ -1,0 +1,27 @@
+{
+  "name": "dx-vue-plugin",
+  "version": "1.0.0",
+  "description": "Vue.js template generator plugin for DX toolkit",
+  "main": "index.js",
+  "keywords": ["dx-plugin", "vue", "template", "generator"],
+  "author": "DX Team",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^11.1.1"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "dx": {
+    "plugin": true,
+    "templates": [
+      "vue-component",
+      "vue-composable", 
+      "vue-store"
+    ],
+    "hooks": [
+      "beforeGenerate",
+      "afterGenerate"
+    ]
+  }
+}
